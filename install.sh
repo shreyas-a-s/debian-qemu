@@ -16,23 +16,23 @@ fi
 sudo apt install qemu-kvm qemu-system qemu-utils python3 python3-pip libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager -y
 
 # Checking if libvirtd.service was enabled correctly
-if [ $(systemctl status libvirtd.service | awk 'NR==2{print $4}') != "enabled;" ]; then 
+if [ "$(systemctl status libvirtd.service | awk 'NR==2{print $4}')" != "enabled;" ]; then 
     echo "libvirtd.service is not enabled. Please check why."
 fi
 
 # Start default network for networking
 sudo virsh net-start default
 sudo virsh net-autostart default
-if [ $(sudo virsh net-list --all | awk 'NR==3{print $2}') != "active" ]; then 
+if [ "$(sudo virsh net-list --all | awk 'NR==3{print $2}')" != "active" ]; then 
     echo "Default network for virtual machines is not active. Please check why."
 fi
 
 # Add user to libvirt to Allow access to VMs
-sudo usermod -aG libvirt $USER
-sudo usermod -aG libvirt-qemu $USER
-sudo usermod -aG kvm $USER
-sudo usermod -aG input $USER
-sudo usermod -aG disk $USER
+sudo usermod -aG libvirt "$USER"
+sudo usermod -aG libvirt-qemu "$USER"
+sudo usermod -aG kvm "$USER"
+sudo usermod -aG input "$USER"
+sudo usermod -aG disk "$USER"
 
 # The End
 echo "Reboot the system."
