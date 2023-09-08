@@ -2,7 +2,7 @@
 Bash script to install and setup qemu &amp; virt-manager on debian.
 
 # Acknowledgements
-This script is based on the [Setup Qemu in Debian Linux](https://christitus.com/vm-setup-in-linux/) guide by [Chris Titus](https://github.com/christitustech/).
+This script is based on the [Setup Qemu in Debian Linux](https://christitus.com/vm-setup-in-linux/) guide by [Chris Titus](https://github.com/christitustech/). Check out his [YouTube channel](https://www.youtube.com/@ChrisTitusTech) for awesome things like this.
 
 ## Installation
 
