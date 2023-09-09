@@ -16,5 +16,5 @@ Execute install.sh as **normal user** from a terminal:
 
 For those who would like a single-line command:
 ```bash
- git clone https://github.com/shreyas-a-s/debian-customisation.git && cd debian-customisation/ && ./install.sh
+ git clone https://github.com/shreyas-a-s/debian-qemu.git && cd debian-qemu/ && ./install.sh
 ```
