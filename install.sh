@@ -13,7 +13,7 @@ if [ "$(grep -Ec '(vmx|svm)' /proc/cpuinfo)" -eq '0' ]; then
 fi
 
 # Actual installation
-sudo apt-get -qq install qemu-kvm qemu-system qemu-utils python3 python3-pip libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
+sudo apt-get -y install qemu-kvm qemu-system qemu-utils python3 python3-pip libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
 
 # Checking if libvirtd.service was enabled correctly
 if [ "$(systemctl status libvirtd.service | awk 'NR==2{print $4}')" != "enabled;" ]; then 
