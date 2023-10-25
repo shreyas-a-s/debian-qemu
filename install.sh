@@ -23,8 +23,8 @@ fi
 # Start default network for networking
 sudo virsh net-start default
 sudo virsh net-autostart default
-if [ "$(sudo virsh net-list --all | awk 'NR==3{print $2}')" != "active" ]; then 
-    echo "Default network for virtual machines is not active. Please check why."
+if [ "$(sudo virsh net-list --all | awk 'NR==3{print $3}')" != "yes" ]; then 
+    echo "Default network for virtual machines is not set to autostart. Please check why."
 fi
 
 # Add user to libvirt to Allow access to VMs
