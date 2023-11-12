@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check if script is run as root
-if [[ $EUID == 0 ]]; then
+if [ "$(id -u)" -eq 0 ]; then
   echo "You must NOT be a root user when running this script, please run ./install.sh" 2>&1
   exit 1
 fi
