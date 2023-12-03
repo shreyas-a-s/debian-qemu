@@ -13,7 +13,33 @@ if [ "$(grep -Ec '(vmx|svm)' /proc/cpuinfo)" -eq '0' ]; then
 fi
 
 # Actual installation
-sudo apt-get -y install qemu-kvm qemu-system qemu-utils python3 python3-pip libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
+if command -v apt-get > /dev/null; then
+
+  sudo apt-get -y install qemu-kvm qemu-system qemu-utils python3 python3-pip libvirt-clients libvirt-daemon-system bridge-utils virtinst libvirt-daemon virt-manager
+	
+	# Add user to libvirt to Allow access to VMs
+	sudo usermod -aG libvirt "$USER"
+	sudo usermod -aG libvirt-qemu "$USER"
+	sudo usermod -aG kvm "$USER"
+	sudo usermod -aG input "$USER"
+	sudo usermod -aG disk "$USER"
+
+elif command -v pacman > /dev/null; then
+
+	sudo pacman -S qemu-base virt-viewer dnsmasq vde2 bridge-utils openbsd-netcat ebtables iptables libguestfs --noconfirm
+	
+	if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
+	  sudo pacman -S gnome-boxes --noconfirm
+	else
+	  sudo pacman -S virt-manager --noconfirm
+	fi
+	  
+	sudo usermod -aG libvirt $(whoami)
+	newgrp libvirt
+	
+	sudo systemctl enable --now libvirtd
+
+fi
 
 # Checking if libvirtd.service was enabled correctly
 if [ "$(systemctl status libvirtd.service | awk 'NR==2{print $4}')" != "enabled;" ]; then 
@@ -26,13 +52,6 @@ sudo virsh net-autostart default
 if [ "$(sudo virsh net-list --all | awk 'NR==3{print $3}')" != "yes" ]; then 
     echo "Default network for virtual machines is not set to autostart. Please check why."
 fi
-
-# Add user to libvirt to Allow access to VMs
-sudo usermod -aG libvirt "$USER"
-sudo usermod -aG libvirt-qemu "$USER"
-sudo usermod -aG kvm "$USER"
-sudo usermod -aG input "$USER"
-sudo usermod -aG disk "$USER"
 
 # The End
 echo "Reboot the system."
