@@ -32,14 +32,15 @@ elif command -v pacman > /dev/null; then
   newgrp libvirt
 fi
 
-if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
+# Install VM manager frontend based on system configs
+if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then # Install GNOME-Boxes if DE is GNOME
   if command -v apt-get > /dev/null; then
     sudo apt-get install -y gnome-boxes
   elif command -v pacman > /dev/null; then
     sudo pacman -S --noconfirm gnome-boxes
   fi
 else
-  if command -v apt-get > /dev/null; then
+  if command -v apt-get > /dev/null; then # Install virt-manager otherwise
     sudo apt-get install -y virt-manager
   elif command -v pacman > /dev/null; then
     sudo pacman -S --noconfirm virt-manager
