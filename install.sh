@@ -33,7 +33,7 @@ elif command -v pacman > /dev/null; then
 fi
 
 # Install VM manager frontend based on system configs
-if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then # Install GNOME-Boxes if DE is GNOME
+if ps -A | grep -q "gnome-shell"; then # Install GNOME-Boxes if DE is GNOME
   if command -v apt-get > /dev/null; then
     sudo apt-get install -y gnome-boxes
   elif command -v pacman > /dev/null; then
